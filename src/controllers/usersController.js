@@ -23,5 +23,25 @@ module.exports = {
     const result = await db.query('SELECT id, email, full_name, role, status, last_login, created_at FROM public.users WHERE id=$1', [id]);
     if (!result.rows.length) return res.status(404).send('Usuario no encontrado');
     res.render('users/show', { user: result.rows[0] });
+  },
+
+  editForm: async (req, res) => {
+    const id = req.params.id;
+    const result = await db.query('SELECT id, email, full_name, role, status FROM public.users WHERE id=$1', [id]);
+    if (!result.rows.length) return res.redirect('/users');
+    res.render('users/edit', { user: result.rows[0] });
+  },
+
+  update: async (req, res) => {
+    const id = req.params.id;
+    const { email, full_name, role, status } = req.body;
+    await db.query('UPDATE public.users SET email=$1, full_name=$2, role=$3, status=$4 WHERE id=$5', [email, full_name, role, status, id]);
+    res.redirect('/users');
+  },
+
+  remove: async (req, res) => {
+    const id = req.params.id;
+    await db.query('DELETE FROM public.users WHERE id=$1', [id]);
+    res.redirect('/users');
   }
 };

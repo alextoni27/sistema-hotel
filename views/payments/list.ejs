@@ -1,8 +1,39 @@
-<%- include('../layout', { body: '' }) %>
+<div class="card mb-8">
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-lg font-medium">Resumen de pagos por periodo</h2>
+    <a href="/payments/new" class="bg-blue-600 text-white px-3 py-1 rounded">Registrar pago</a>
+  </div>
+  <div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Inquilino</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Cuarto</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Periodo</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Monto mensual</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Total abonado</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Saldo</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-100">
+        <% resumen.forEach(r => { %>
+          <tr class="cursor-pointer hover:bg-blue-50" data-period="<%= r.lease_id %>_<%= r.period_start %>_<%= r.period_end %>">
+            <td class="px-3 py-2"><%= r.tenant %></td>
+            <td class="px-3 py-2"><%= r.room_code %></td>
+            <td class="px-3 py-2"><%= r.period_start ? new Date(r.period_start).toLocaleDateString('es-PE', { year: 'numeric', month: 'short', day: '2-digit' }) : '-' %> – <%= r.period_end ? new Date(r.period_end).toLocaleDateString('es-PE', { year: 'numeric', month: 'short', day: '2-digit' }) : '-' %></td>
+            <td class="px-3 py-2">S/ <%= r.monthly_price %></td>
+            <td class="px-3 py-2">S/ <%= r.total_pagado.toFixed(2) %></td>
+            <td class="px-3 py-2 <%= r.total_pagado >= r.monthly_price ? 'text-green-600' : 'text-red-600' %>">S/ <%= (r.monthly_price - r.total_pagado).toFixed(2) %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
 <div class="card">
   <div class="flex items-center justify-between mb-4">
-    <h2 class="text-lg font-medium">Pagos</h2>
-    <a href="/payments/new" class="bg-blue-600 text-white px-3 py-1 rounded">Registrar pago</a>
+    <h2 class="text-lg font-medium">Abonos individuales</h2>
   </div>
   <div class="overflow-x-auto">
     <table class="min-w-full divide-y divide-gray-200">
@@ -13,18 +44,21 @@
           <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Cuarto</th>
           <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Periodo</th>
           <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Monto</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Método</th>
           <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Estado</th>
           <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Acción</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Acciones</th>
         </tr>
       </thead>
       <tbody class="bg-white divide-y divide-gray-100">
-        <% payments.forEach(p => { %>
-          <tr>
+        <% pagos.forEach(p => { %>
+          <tr class="abono-row" data-period="<%= p.lease_id %>_<%= p.period_start %>_<%= p.period_end %>" style="display:none;">
             <td class="px-3 py-2"><%= p.id %></td>
             <td class="px-3 py-2"><%= p.tenant %></td>
             <td class="px-3 py-2"><%= p.room_code %></td>
-            <td class="px-3 py-2"><%= p.period_start %> – <%= p.period_end %></td>
-            <td class="px-3 py-2"><%= p.amount %></td>
+            <td class="px-3 py-2"><%= p.period_start ? new Date(p.period_start).toLocaleDateString('es-PE', { year: 'numeric', month: 'short', day: '2-digit' }) : '-' %> – <%= p.period_end ? new Date(p.period_end).toLocaleDateString('es-PE', { year: 'numeric', month: 'short', day: '2-digit' }) : '-' %></td>
+            <td class="px-3 py-2">S/ <%= p.amount %></td>
+            <td class="px-3 py-2"><%= p.method %></td>
             <td class="px-3 py-2"><span class="text-sm text-gray-600"><%= p.status %></span></td>
             <td class="px-3 py-2">
               <% if (p.status !== 'paid') { %>
@@ -33,8 +67,28 @@
                 </form>
               <% } %>
             </td>
+            <td class="px-3 py-2 flex gap-2">
+              <a href="/payments/<%= p.id %>/edit" class="text-blue-600 hover:underline">Editar</a>
+              <form action="/payments/<%= p.id %>?_method=DELETE" method="post" style="display:inline;">
+                <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('¿Seguro que deseas eliminar este pago?')">Eliminar</button>
+              </form>
+            </td>
           </tr>
         <% }) %>
+      </div>
+      <script>
+        // Ocultar todos los abonos al cargar
+        document.querySelectorAll('.abono-row').forEach(abono => abono.style.display = 'none');
+        // Mostrar solo los abonos del periodo seleccionado
+        document.querySelectorAll('[data-period]').forEach(row => {
+          row.addEventListener('click', function() {
+            const period = this.getAttribute('data-period');
+            document.querySelectorAll('.abono-row').forEach(abono => {
+              abono.style.display = abono.getAttribute('data-period') === period ? '' : 'none';
+            });
+          });
+        });
+      </script>
       </tbody>
     </table>
   </div>

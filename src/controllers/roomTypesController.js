@@ -21,5 +21,25 @@ module.exports = {
     const t = await db.query('SELECT * FROM public.room_type WHERE id=$1', [id]);
     if (!t.rows.length) return res.status(404).send('No encontrado');
     res.render('room_types/show', { type: t.rows[0] });
+  },
+
+  editForm: async (req, res) => {
+    const id = req.params.id;
+    const result = await db.query('SELECT * FROM public.room_type WHERE id=$1', [id]);
+    if (!result.rows.length) return res.redirect('/room_types');
+    res.render('room_types/edit', { type: result.rows[0] });
+  },
+
+  update: async (req, res) => {
+    const id = req.params.id;
+    const { code, name, base_price } = req.body;
+    await db.query('UPDATE public.room_type SET code=$1, name=$2, base_price=$3 WHERE id=$4', [code, name, base_price, id]);
+    res.redirect('/room_types');
+  },
+
+  remove: async (req, res) => {
+    const id = req.params.id;
+    await db.query('DELETE FROM public.room_type WHERE id=$1', [id]);
+    res.redirect('/room_types');
   }
 };

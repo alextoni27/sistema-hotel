@@ -1,0 +1,30 @@
+<%- include('../_layout_top') %>
+<div class="max-w-lg mx-auto card">
+  <h2 class="text-lg font-medium mb-4">Editar cuarto</h2>
+  <form action="/rooms/<%= room.id %>?_method=PUT" method="post" class="space-y-3">
+    <div>
+      <label class="block text-sm text-gray-700">Casa</label>
+      <input class="w-full border rounded px-3 py-2" name="house" type="text" value="<%= room.house %>" required>
+    </div>
+    <div>
+      <label class="block text-sm text-gray-700">Piso</label>
+      <input class="w-full border rounded px-3 py-2" name="floor" type="text" value="<%= room.floor %>" required>
+    </div>
+    <div>
+      <label class="block text-sm text-gray-700">Número</label>
+      <input class="w-full border rounded px-3 py-2" name="number" type="text" value="<%= room.number %>" required>
+    </div>
+    <div>
+      <label class="block text-sm text-gray-700">Tipo</label>
+      <input class="w-full border rounded px-3 py-2" name="type" type="text" value="<%= room.type %>" required>
+    </div>
+    <div>
+      <label class="block text-sm text-gray-700">Estado</label>
+      <input class="w-full border rounded px-3 py-2" name="status" type="text" value="<%= room.status %>" required>
+    </div>
+    <div>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded" type="submit">Actualizar cuarto</button>
+    </div>
+  </form>
+</div>
+<%- include('../_layout_bottom') %>

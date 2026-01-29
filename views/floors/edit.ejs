@@ -1,0 +1,22 @@
+<%- include('../_layout_top') %>
+<div class="max-w-lg mx-auto card">
+  <h2 class="text-lg font-medium mb-4">Editar piso</h2>
+  <form action="/floors/<%= floor.id %>?_method=PUT" method="post" class="space-y-3">
+    <div>
+      <label class="block text-sm text-gray-700">Casa</label>
+      <input class="w-full border rounded px-3 py-2" name="house_name" type="text" value="<%= floor.house_name %>" required>
+    </div>
+    <div>
+      <label class="block text-sm text-gray-700">Número</label>
+      <input class="w-full border rounded px-3 py-2" name="number" type="text" value="<%= floor.number %>" required>
+    </div>
+    <div>
+      <label class="block text-sm text-gray-700">Descripción</label>
+      <input class="w-full border rounded px-3 py-2" name="description" type="text" value="<%= floor.description %>">
+    </div>
+    <div>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded" type="submit">Actualizar piso</button>
+    </div>
+  </form>
+</div>
+<%- include('../_layout_bottom') %>

@@ -20,11 +20,11 @@
     </div>
     <div>
       <label class="block text-sm text-gray-700">Fecha inicio</label>
-      <input class="w-full border rounded px-3 py-2" name="start_date" type="date" required>
+      <input class="w-full border rounded px-3 py-2" name="start_date" type="date" value="<%= typeof lease !== 'undefined' && lease.start_date ? lease.start_date.toISOString().slice(0,10) : '' %>" required>
     </div>
     <div>
       <label class="block text-sm text-gray-700">Fecha fin</label>
-      <input class="w-full border rounded px-3 py-2" name="end_date" type="date">
+      <input class="w-full border rounded px-3 py-2" name="end_date" type="date" value="<%= typeof lease !== 'undefined' && lease.end_date ? lease.end_date.toISOString().slice(0,10) : '' %>">
     </div>
     <div>
       <label class="block text-sm text-gray-700">Precio mensual</label>

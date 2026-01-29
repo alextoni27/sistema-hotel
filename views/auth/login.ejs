@@ -1,4 +1,3 @@
-<%- include('../layout', { body: '' }) %>
 <form action="/auth/login" method="post">
   <% if (typeof error !== 'undefined') { %>
     <p style="color:red"><%= error %></p>

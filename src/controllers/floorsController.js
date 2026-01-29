@@ -22,5 +22,25 @@ module.exports = {
     const f = await db.query('SELECT f.*, h.name as house_name FROM public.floor f JOIN public.house h ON f.house_id=h.id WHERE f.id=$1', [id]);
     if (!f.rows.length) return res.status(404).send('No encontrado');
     res.render('floors/show', { floor: f.rows[0] });
+  },
+
+  editForm: async (req, res) => {
+    const id = req.params.id;
+    const result = await db.query('SELECT f.*, h.name as house_name FROM public.floor f JOIN public.house h ON f.house_id=h.id WHERE f.id=$1', [id]);
+    if (!result.rows.length) return res.redirect('/floors');
+    res.render('floors/edit', { floor: result.rows[0] });
+  },
+
+  update: async (req, res) => {
+    const id = req.params.id;
+    const { number, description } = req.body;
+    await db.query('UPDATE public.floor SET number=$1, description=$2 WHERE id=$3', [number, description, id]);
+    res.redirect('/floors');
+  },
+
+  remove: async (req, res) => {
+    const id = req.params.id;
+    await db.query('DELETE FROM public.floor WHERE id=$1', [id]);
+    res.redirect('/floors');
   }
 };

@@ -1,0 +1,22 @@
+<%- include('../_layout_top') %>
+<div class="max-w-lg mx-auto card">
+  <h2 class="text-lg font-medium mb-4">Editar inquilino</h2>
+  <form action="/tenants/<%= tenant.id %>?_method=PUT" method="post" class="space-y-3">
+    <div>
+      <label class="block text-sm text-gray-700">Nombre completo</label>
+      <input class="w-full border rounded px-3 py-2" name="full_name" type="text" value="<%= tenant.full_name %>" required>
+    </div>
+    <div>
+      <label class="block text-sm text-gray-700">Teléfono</label>
+      <input class="w-full border rounded px-3 py-2" name="phone" type="text" value="<%= tenant.phone %>">
+    </div>
+    <div>
+      <label class="block text-sm text-gray-700">Email</label>
+      <input class="w-full border rounded px-3 py-2" name="email" type="email" value="<%= tenant.email %>">
+    </div>
+    <div>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded" type="submit">Actualizar inquilino</button>
+    </div>
+  </form>
+</div>
+<%- include('../_layout_bottom') %>

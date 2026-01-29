@@ -1,0 +1,18 @@
+<%- include('../_layout_top') %>
+<div class="max-w-lg mx-auto card">
+  <h2 class="text-lg font-medium mb-4">Editar casa</h2>
+  <form action="/houses/<%= house.id %>?_method=PUT" method="post" class="space-y-3">
+    <div>
+      <label class="block text-sm text-gray-700">Nombre</label>
+      <input class="w-full border rounded px-3 py-2" name="name" type="text" value="<%= house.name %>" required>
+    </div>
+    <div>
+      <label class="block text-sm text-gray-700">Dirección</label>
+      <input class="w-full border rounded px-3 py-2" name="address" type="text" value="<%= house.address %>" required>
+    </div>
+    <div>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded" type="submit">Actualizar casa</button>
+    </div>
+  </form>
+</div>
+<%- include('../_layout_bottom') %>

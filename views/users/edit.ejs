@@ -1,0 +1,32 @@
+<%- include('../_layout_top') %>
+<div class="max-w-lg mx-auto card">
+  <h2 class="text-lg font-medium mb-4">Editar usuario</h2>
+  <form action="/users/<%= user.id %>?_method=PUT" method="post" class="space-y-3">
+    <div>
+      <label class="block text-sm text-gray-700">Email</label>
+      <input class="w-full border rounded px-3 py-2" name="email" type="email" value="<%= user.email %>" required>
+    </div>
+    <div>
+      <label class="block text-sm text-gray-700">Nombre completo</label>
+      <input class="w-full border rounded px-3 py-2" name="full_name" type="text" value="<%= user.full_name %>" required>
+    </div>
+    <div>
+      <label class="block text-sm text-gray-700">Rol</label>
+      <select name="role" class="w-full border rounded px-3 py-2">
+        <option value="admin" <%= user.role === 'admin' ? 'selected' : '' %>>Admin</option>
+        <option value="user" <%= user.role === 'user' ? 'selected' : '' %>>Usuario</option>
+      </select>
+    </div>
+    <div>
+      <label class="block text-sm text-gray-700">Estado</label>
+      <select name="status" class="w-full border rounded px-3 py-2">
+        <option value="activo" <%= user.status === 'activo' ? 'selected' : '' %>>Activo</option>
+        <option value="inactivo" <%= user.status === 'inactivo' ? 'selected' : '' %>>Inactivo</option>
+      </select>
+    </div>
+    <div>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded" type="submit">Actualizar usuario</button>
+    </div>
+  </form>
+</div>
+<%- include('../_layout_bottom') %>

@@ -23,5 +23,25 @@ module.exports = {
     const r = await db.query('SELECT r.*, h.name as house, f.number as floor, rt.name as type FROM public.room r JOIN public.house h ON r.house_id=h.id JOIN public.floor f ON r.floor_id=f.id JOIN public.room_type rt ON r.room_type_id=rt.id WHERE r.id=$1', [id]);
     if (!r.rows.length) return res.status(404).send('No encontrado');
     res.render('rooms/show', { room: r.rows[0] });
+  },
+
+  editForm: async (req, res) => {
+    const id = req.params.id;
+    const result = await db.query('SELECT r.*, h.name as house, f.number as floor, rt.name as type FROM public.room r JOIN public.house h ON r.house_id=h.id JOIN public.floor f ON r.floor_id=f.id JOIN public.room_type rt ON r.room_type_id=rt.id WHERE r.id=$1', [id]);
+    if (!result.rows.length) return res.redirect('/rooms');
+    res.render('rooms/edit', { room: result.rows[0] });
+  },
+
+  update: async (req, res) => {
+    const id = req.params.id;
+    const { house, floor, number, type, status } = req.body;
+    await db.query('UPDATE public.room SET number=$1, status=$2 WHERE id=$3', [number, status, id]);
+    res.redirect('/rooms');
+  },
+
+  remove: async (req, res) => {
+    const id = req.params.id;
+    await db.query('DELETE FROM public.room WHERE id=$1', [id]);
+    res.redirect('/rooms');
   }
 };
