@@ -1,0 +1,8 @@
+<%- include('../layout', { body: '' }) %>
+<div class="card max-w-md">
+  <h2 class="text-lg font-medium mb-3">Piso <%= floor.number %> — <%= floor.house_name %></h2>
+  <dl class="space-y-2">
+    <div><dt class="text-xs text-gray-500">ID</dt><dd class="mt-1"><%= floor.id %></dd></div>
+    <div><dt class="text-xs text-gray-500">Descripción</dt><dd class="mt-1"><%= floor.description || '-' %></dd></div>
+  </dl>
+</div>

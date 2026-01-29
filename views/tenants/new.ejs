@@ -1,0 +1,27 @@
+<%- include('../layout', { body: '' }) %>
+<%- include('../_layout_top') %>
+<div class="max-w-md mx-auto card">
+  <h2 class="text-lg font-medium mb-4">Nuevo inquilino</h2>
+  <form action="/tenants" method="post" class="space-y-3">
+    <div>
+      <label class="block text-sm text-gray-700">Nombre completo</label>
+      <input class="w-full border rounded px-3 py-2" name="full_name" required>
+    </div>
+    <div>
+      <label class="block text-sm text-gray-700">Documento</label>
+      <input class="w-full border rounded px-3 py-2" name="document">
+    </div>
+    <div>
+      <label class="block text-sm text-gray-700">Teléfono</label>
+      <input class="w-full border rounded px-3 py-2" name="phone">
+    </div>
+    <div>
+      <label class="block text-sm text-gray-700">Email</label>
+      <input class="w-full border rounded px-3 py-2" name="email" type="email">
+    </div>
+    <div>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded" type="submit">Crear</button>
+    </div>
+  </form>
+</div>
+<%- include('../_layout_bottom') %>

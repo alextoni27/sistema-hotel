@@ -1,0 +1,35 @@
+<%- include('../_layout_top') %>
+<div class="card">
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-lg font-medium">Usuarios</h2>
+    <a href="/users/new" class="bg-blue-600 text-white px-3 py-1 rounded">Crear usuario</a>
+  </div>
+  <div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">ID</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Email</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Nombre</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Rol</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Estado</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Ver</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-100">
+        <% users.forEach(u => { %>
+          <tr>
+            <td class="px-3 py-2"><%= u.id %></td>
+            <td class="px-3 py-2"><%= u.email %></td>
+            <td class="px-3 py-2"><%= u.full_name %></td>
+            <td class="px-3 py-2"><%= u.role %></td>
+            <td class="px-3 py-2"><%= u.status %></td>
+            <td class="px-3 py-2"><a class="text-blue-600" href="/users/<%= u.id %>">Ver</a></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+  </div>
+  <%- include('../_layout_bottom') %>

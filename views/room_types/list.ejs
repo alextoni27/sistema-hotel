@@ -1,0 +1,31 @@
+<%- include('../layout', { body: '' }) %>
+<div class="card">
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-lg font-medium">Tipos de cuarto</h2>
+    <a href="/room_types/new" class="bg-blue-600 text-white px-3 py-1 rounded">Nuevo tipo</a>
+  </div>
+  <div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">ID</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Código</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Nombre</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Precio base</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Ver</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-100">
+        <% types.forEach(t => { %>
+          <tr>
+            <td class="px-3 py-2"><%= t.id %></td>
+            <td class="px-3 py-2"><%= t.code %></td>
+            <td class="px-3 py-2"><%= t.name %></td>
+            <td class="px-3 py-2"><%= t.base_price %></td>
+            <td class="px-3 py-2"><a class="text-blue-600" href="/room_types/<%= t.id %>">Ver</a></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>

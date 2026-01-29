@@ -1,0 +1,17 @@
+<%- include('../_layout_top') %>
+<div class="card">
+  <h2 class="text-lg font-medium mb-3">Cuarto <%= room.code || (room.house + ' - ' + room.floor + '-' + room.number) %></h2>
+  <dl class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+    <div class="bg-gray-50 p-3 rounded"><dt class="text-xs text-gray-500">Casa</dt><dd class="mt-1"><%= room.house %></dd></div>
+    <div class="bg-gray-50 p-3 rounded"><dt class="text-xs text-gray-500">Piso</dt><dd class="mt-1"><%= room.floor %></dd></div>
+    <div class="bg-gray-50 p-3 rounded"><dt class="text-xs text-gray-500">Número</dt><dd class="mt-1"><%= room.number %></dd></div>
+    <div class="bg-gray-50 p-3 rounded"><dt class="text-xs text-gray-500">Tipo</dt><dd class="mt-1"><%= room.type %></dd></div>
+    <div class="bg-gray-50 p-3 rounded"><dt class="text-xs text-gray-500">Área</dt><dd class="mt-1"><%= room.area_m2 %> m2</dd></div>
+    <div class="bg-gray-50 p-3 rounded"><dt class="text-xs text-gray-500">Estado</dt><dd class="mt-1"><%= room.status %></dd></div>
+  </dl>
+  <div class="mt-4">
+    <a href="/leases/new" class="bg-blue-600 text-white px-3 py-1 rounded">Crear contrato</a>
+  </div>
+</div>
+  </div>
+  <%- include('../_layout_bottom') %>

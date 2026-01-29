@@ -1,0 +1,41 @@
+<%- include('../layout', { body: '' }) %>
+<div class="card">
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-lg font-medium">Pagos</h2>
+    <a href="/payments/new" class="bg-blue-600 text-white px-3 py-1 rounded">Registrar pago</a>
+  </div>
+  <div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">ID</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Inquilino</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Cuarto</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Periodo</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Monto</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Estado</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Acción</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-100">
+        <% payments.forEach(p => { %>
+          <tr>
+            <td class="px-3 py-2"><%= p.id %></td>
+            <td class="px-3 py-2"><%= p.tenant %></td>
+            <td class="px-3 py-2"><%= p.room_code %></td>
+            <td class="px-3 py-2"><%= p.period_start %> – <%= p.period_end %></td>
+            <td class="px-3 py-2"><%= p.amount %></td>
+            <td class="px-3 py-2"><span class="text-sm text-gray-600"><%= p.status %></span></td>
+            <td class="px-3 py-2">
+              <% if (p.status !== 'paid') { %>
+                <form method="post" action="/payments/<%= p.id %>/pay" style="display:inline">
+                  <button class="bg-green-600 text-white px-3 py-1 rounded" type="submit">Marcar pagado</button>
+                </form>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Sistema Hotel</title>
+  <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%233b82f6'/><text x='8' y='11' font-size='10' text-anchor='middle' fill='white'>H</text></svg>">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="min-h-screen">
+    <!-- Sidebar (left) -->
+    <aside id="sideMenu" class="fixed inset-y-0 left-0 w-64 bg-white border-r transform -translate-x-full md:translate-x-0 transition-transform duration-300 z-40">
+      <div class="h-full overflow-y-auto flex flex-col">
+        <div class="p-4 border-b">
+          <h2 class="text-lg font-semibold text-gray-800">Sistema Hotel</h2>
+        </div>
+        
+        <nav class="flex-1 p-4 space-y-1">
+          <a href="/rooms" class="block px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-600 transition-colors">
+            📦 Cuartos
+          </a>
+          <a href="/tenants" class="block px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-600 transition-colors">
+            👥 Inquilinos
+          </a>
+          <a href="/leases" class="block px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-600 transition-colors">
+            📄 Contratos
+          </a>
+          <a href="/payments" class="block px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-600 transition-colors">
+            💳 Pagos
+          </a>
+          <a href="/houses" class="block px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-600 transition-colors">
+            🏠 Casas
+          </a>
+          <a href="/floors" class="block px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-600 transition-colors">
+            🏢 Pisos
+          </a>
+          <a href="/room_types" class="block px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-600 transition-colors">
+            🏷️ Tipos
+          </a>
+        </nav>
+        
+        <div class="p-4 border-t mt-auto">
+          <% if (currentUser) { %>
+            <p class="text-sm text-gray-600 mb-2">
+              👋 Hola, <%= currentUser.full_name || currentUser.email %>
+            </p>
+            <a href="/users" class="block px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-600 transition-colors mb-1">
+              ⚙️ Usuarios
+            </a>
+            <form method="post" action="/auth/logout">
+              <button type="submit" class="w-full text-left px-3 py-2 rounded hover:bg-red-50 hover:text-red-600 transition-colors">
+                🚪 Salir
+              </button>
+            </form>
+          <% } else { %>
+            <a href="/auth/login" class="block px-3 py-2 rounded hover:bg-blue-50 hover:text-blue-600 transition-colors">
+              🔐 Entrar
+            </a>
+          <% } %>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main content wrapper - Always has left margin on desktop -->
+    <div class="md:ml-64">
+      <!-- Header -->
+      <header class="bg-white border-b sticky top-0 z-30 shadow-sm">
+        <div class="flex items-center justify-between p-4">
+          <h1 class="text-xl font-semibold text-gray-800">
+            <a href="/" class="hover:text-blue-600 transition-colors">Sistema Hotel</a>
+          </h1>
+          
+          <!-- Hamburger button (visible only on mobile) -->
+          <button 
+            id="sidebarToggle" 
+            aria-label="Abrir menú" 
+            aria-expanded="false" 
+            class="md:hidden p-2 rounded-lg border border-gray-300 hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <svg id="iconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+            <svg id="iconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main content -->
+      <main class="min-h-screen bg-gray-50">
+        <div class="max-w-7xl mx-auto p-4 md:p-6 lg:p-8">
+          <%- body %>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Overlay (only visible on mobile when sidebar is open) -->
+  <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-30 md:hidden"></div>
+
+  <script>
+    (function() {
+      const toggle = document.getElementById('sidebarToggle');
+      const sidebar = document.getElementById('sideMenu');
+      const overlay = document.getElementById('sidebarOverlay');
+      const iconOpen = document.getElementById('iconOpen');
+      const iconClose = document.getElementById('iconClose');
+      
+      if (!toggle || !sidebar) return;
+
+      let isOpen = false;
+
+      function setSidebarState(open) {
+        isOpen = open;
+        
+        if (isOpen) {
+          // Open sidebar
+          sidebar.classList.remove('-translate-x-full');
+          overlay.classList.remove('hidden');
+          toggle.setAttribute('aria-expanded', 'true');
+          iconOpen.classList.add('hidden');
+          iconClose.classList.remove('hidden');
+          document.body.style.overflow = 'hidden'; // Prevent scroll on mobile
+        } else {
+          // Close sidebar
+          sidebar.classList.add('-translate-x-full');
+          overlay.classList.add('hidden');
+          toggle.setAttribute('aria-expanded', 'false');
+          iconOpen.classList.remove('hidden');
+          iconClose.classList.add('hidden');
+          document.body.style.overflow = ''; // Restore scroll
+        }
+      }
+
+      // Toggle sidebar on button click
+      toggle.addEventListener('click', () => {
+        setSidebarState(!isOpen);
+      });
+
+      // Close sidebar when clicking overlay
+      overlay.addEventListener('click', () => {
+        setSidebarState(false);
+      });
+
+      // Close sidebar when clicking any link (mobile only)
+      const sidebarLinks = sidebar.querySelectorAll('a, button[type="submit"]');
+      sidebarLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth < 768) {
+            setSidebarState(false);
+          }
+        });
+      });
+
+      // Handle resize events
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          if (window.innerWidth >= 768) {
+            // Desktop: ensure sidebar is visible and overlay is hidden
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.add('hidden');
+            document.body.style.overflow = '';
+            isOpen = false;
+          } else {
+            // Mobile: ensure sidebar is hidden unless explicitly opened
+            if (!isOpen) {
+              sidebar.classList.add('-translate-x-full');
+              overlay.classList.add('hidden');
+            }
+          }
+        }, 100);
+      });
+
+      // Close sidebar on Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && isOpen) {
+          setSidebarState(false);
+        }
+      });
+
+      // Initialize: sidebar hidden on mobile, visible on desktop
+      if (window.innerWidth < 768) {
+        setSidebarState(false);
+      }
+    })();
+  </script>
+</body>
+</html>

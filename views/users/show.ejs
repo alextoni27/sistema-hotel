@@ -1,0 +1,14 @@
+<%- include('../_layout_top') %>
+<div class="card max-w-md">
+  <h2 class="text-lg font-medium mb-3">Usuario</h2>
+  <dl class="space-y-2">
+    <div><dt class="text-xs text-gray-500">ID</dt><dd class="mt-1"><%= user.id %></dd></div>
+    <div><dt class="text-xs text-gray-500">Email</dt><dd class="mt-1"><%= user.email %></dd></div>
+    <div><dt class="text-xs text-gray-500">Nombre</dt><dd class="mt-1"><%= user.full_name %></dd></div>
+    <div><dt class="text-xs text-gray-500">Rol</dt><dd class="mt-1"><%= user.role %></dd></div>
+    <div><dt class="text-xs text-gray-500">Estado</dt><dd class="mt-1"><%= user.status %></dd></div>
+    <div><dt class="text-xs text-gray-500">Último login</dt><dd class="mt-1"><%= user.last_login || '-' %></dd></div>
+  </dl>
+</div>
+
+  <%- include('../_layout_bottom') %>

@@ -1,0 +1,35 @@
+<%- include('../_layout_top') %>
+<div class="card">
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-lg font-medium">Cuartos</h2>
+    <a href="/rooms/new" class="bg-blue-600 text-white px-3 py-1 rounded">Crear cuarto</a>
+  </div>
+  <div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Casa</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Piso</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Número</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Tipo</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Estado</th>
+          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Ver</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-100">
+        <% rooms.forEach(r => { %>
+          <tr>
+            <td class="px-3 py-2"><%= r.house %></td>
+            <td class="px-3 py-2"><%= r.floor %></td>
+            <td class="px-3 py-2"><%= r.number %></td>
+            <td class="px-3 py-2"><%= r.type %></td>
+            <td class="px-3 py-2"><span class="text-sm text-gray-600"><%= r.status %></span></td>
+            <td class="px-3 py-2"><a class="text-blue-600" href="/rooms/<%= r.id %>">Ver</a></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+  </div>
+  <%- include('../_layout_bottom') %>

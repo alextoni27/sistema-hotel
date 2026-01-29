@@ -1,0 +1,30 @@
+{
+  "name": "sistema-hotel",
+  "version": "1.0.0",
+  "description": "Sistema de alquiler mensual - Node + Express + Postgres",
+  "main": "app.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "build:css": "tailwindcss -i ./src/styles/tailwind.css -o ./public/styles.css --minify",
+    "dev:css": "tailwindcss -i ./src/styles/tailwind.css -o ./public/styles.css --watch"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
+    "connect-pg-simple": "^8.0.0",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.17.3",
+    "method-override": "^3.0.0",
+    "pg": "^8.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "tailwindcss": "^3.4.8",
+    "postcss": "^8.4.24",
+    "autoprefixer": "^10.4.14"
+  }
+}

@@ -1,0 +1,97 @@
+      </main>
+    </div>
+  </div>
+
+  <!-- Overlay (only visible on mobile when sidebar is open) -->
+  <div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-30 md:hidden"></div>
+
+  <script>
+    (function() {
+      const toggle = document.getElementById('sidebarToggle');
+      const sidebar = document.getElementById('sideMenu');
+      const overlay = document.getElementById('sidebarOverlay');
+      const iconOpen = document.getElementById('iconOpen');
+      const iconClose = document.getElementById('iconClose');
+      
+      if (!toggle || !sidebar) return;
+
+      let isOpen = false;
+
+      function setSidebarState(open) {
+        isOpen = open;
+        
+        if (isOpen) {
+          // Open sidebar
+          sidebar.classList.remove('-translate-x-full');
+          overlay.classList.remove('hidden');
+          toggle.setAttribute('aria-expanded', 'true');
+          iconOpen.classList.add('hidden');
+          iconClose.classList.remove('hidden');
+          document.body.style.overflow = 'hidden'; // Prevent scroll on mobile
+        } else {
+          // Close sidebar
+          sidebar.classList.add('-translate-x-full');
+          overlay.classList.add('hidden');
+          toggle.setAttribute('aria-expanded', 'false');
+          iconOpen.classList.remove('hidden');
+          iconClose.classList.add('hidden');
+          document.body.style.overflow = ''; // Restore scroll
+        }
+      }
+
+      // Toggle sidebar on button click
+      toggle.addEventListener('click', () => {
+        setSidebarState(!isOpen);
+      });
+
+      // Close sidebar when clicking overlay
+      overlay.addEventListener('click', () => {
+        setSidebarState(false);
+      });
+
+      // Close sidebar when clicking any link (mobile only)
+      const sidebarLinks = sidebar.querySelectorAll('a, button[type="submit"]');
+      sidebarLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth < 768) {
+            setSidebarState(false);
+          }
+        });
+      });
+
+      // Handle resize events
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          if (window.innerWidth >= 768) {
+            // Desktop: ensure sidebar is visible and overlay is hidden
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.add('hidden');
+            document.body.style.overflow = '';
+            isOpen = false;
+          } else {
+            // Mobile: ensure sidebar is hidden unless explicitly opened
+            if (!isOpen) {
+              sidebar.classList.add('-translate-x-full');
+              overlay.classList.add('hidden');
+            }
+          }
+        }, 100);
+      });
+
+      // Close sidebar on Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && isOpen) {
+          setSidebarState(false);
+        }
+      });
+
+      // Initialize: sidebar hidden on mobile, visible on desktop
+      if (window.innerWidth < 768) {
+        setSidebarState(false);
+      }
+    })();
+  </script>
+</body>
+</html>

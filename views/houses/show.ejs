@@ -1,0 +1,9 @@
+<%- include('../layout', { body: '' }) %>
+<div class="card max-w-md">
+  <h2 class="text-lg font-medium mb-3">Casa: <%= house.name %></h2>
+  <dl class="space-y-2">
+    <div><dt class="text-xs text-gray-500">ID</dt><dd class="mt-1"><%= house.id %></dd></div>
+    <div><dt class="text-xs text-gray-500">Dirección</dt><dd class="mt-1"><%= house.address %></dd></div>
+    <div><dt class="text-xs text-gray-500">Creada</dt><dd class="mt-1"><%= house.created_at %></dd></div>
+  </dl>
+</div>

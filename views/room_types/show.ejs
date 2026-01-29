@@ -1,0 +1,9 @@
+<%- include('../layout', { body: '' }) %>
+<div class="card max-w-md">
+  <h2 class="text-lg font-medium mb-3">Tipo: <%= type.name %> (<%= type.code %>)</h2>
+  <dl class="space-y-2">
+    <div><dt class="text-xs text-gray-500">ID</dt><dd class="mt-1"><%= type.id %></dd></div>
+    <div><dt class="text-xs text-gray-500">Descripción</dt><dd class="mt-1"><%= type.description || '-' %></dd></div>
+    <div><dt class="text-xs text-gray-500">Precio base</dt><dd class="mt-1"><%= type.base_price %></dd></div>
+  </dl>
+</div>

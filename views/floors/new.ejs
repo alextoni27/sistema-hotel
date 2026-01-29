@@ -1,0 +1,25 @@
+<%- include('../layout', { body: '' }) %>
+<div class="max-w-md mx-auto card">
+  <h2 class="text-lg font-medium mb-4">Nuevo piso</h2>
+  <form action="/floors" method="post" class="space-y-3">
+    <div>
+      <label class="block text-sm text-gray-700">Casa</label>
+      <select name="house_id" class="w-full border rounded px-3 py-2">
+        <% houses.forEach(h => { %>
+          <option value="<%= h.id %>"><%= h.name %></option>
+        <% }) %>
+      </select>
+    </div>
+    <div>
+      <label class="block text-sm text-gray-700">Número</label>
+      <input class="w-full border rounded px-3 py-2" name="number" type="number" required>
+    </div>
+    <div>
+      <label class="block text-sm text-gray-700">Descripción</label>
+      <input class="w-full border rounded px-3 py-2" name="description">
+    </div>
+    <div>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded" type="submit">Crear</button>
+    </div>
+  </form>
+</div>
