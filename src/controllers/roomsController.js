@@ -12,6 +12,12 @@ module.exports = {
     res.render('rooms/new', { houses: houses.rows, types: types.rows });
   },
 
+  floorsByHouse: async (req, res) => {
+    const houseId = req.params.houseId;
+    const result = await db.query('SELECT id, number FROM public.floor WHERE house_id = $1 ORDER BY number', [houseId]);
+    res.json(result.rows);
+  },
+
   create: async (req, res) => {
     const { house_id, floor_id, number, code, room_type_id, area_m2 } = req.body;
     await db.query('INSERT INTO public.room(house_id,floor_id,number,code,room_type_id,area_m2) VALUES($1,$2,$3,$4,$5,$6)', [house_id, floor_id, number, code, room_type_id, area_m2 || null]);

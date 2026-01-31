@@ -7,6 +7,9 @@ router.get('/', ensureAuthenticated, controller.list);
 router.get('/new', ensureAuthenticated, controller.newForm);
 router.post('/', ensureAuthenticated, controller.create);
 
+// Endpoint para obtener pisos por casa
+router.get('/floors/:houseId', ensureAuthenticated, controller.floorsByHouse);
+
 router.get('/:id', ensureAuthenticated, controller.show);
 router.get('/:id/edit', ensureAuthenticated, controller.editForm);
 router.put('/:id', ensureAuthenticated, controller.update);

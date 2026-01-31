@@ -5,6 +5,7 @@
     <div>
       <label class="block text-sm text-gray-700">Casa</label>
       <select name="house_id" id="house_id" class="w-full border rounded px-3 py-2">
+        <option value="">Seleccione una casa</option>
         <% houses.forEach(h => { %>
           <option value="<%= h.id %>"><%= h.name %></option>
         <% }) %>
@@ -12,15 +13,17 @@
     </div>
     <div>
       <label class="block text-sm text-gray-700">Piso (número)</label>
-      <input class="w-full border rounded px-3 py-2" name="floor_id" type="number" required>
+      <select name="floor_id" id="floor_id" class="w-full border rounded px-3 py-2" required>
+        <option value="">Seleccione una casa primero</option>
+      </select>
     </div>
     <div>
       <label class="block text-sm text-gray-700">Número cuarto</label>
-      <input class="w-full border rounded px-3 py-2" name="number" type="number" required>
+      <input class="w-full border rounded px-3 py-2" name="number" id="room_number" type="number" required>
     </div>
     <div>
       <label class="block text-sm text-gray-700">Código</label>
-      <input class="w-full border rounded px-3 py-2" name="code">
+      <input class="w-full border rounded px-3 py-2" name="code" id="room_code" disabled>
     </div>
     <div>
       <label class="block text-sm text-gray-700">Tipo</label>
@@ -38,5 +41,49 @@
       <button class="bg-blue-600 text-white px-4 py-2 rounded" type="submit">Crear</button>
     </div>
   </form>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const houseSelect = document.getElementById('house_id');
+      const floorSelect = document.getElementById('floor_id');
+      const numberInput = document.getElementById('room_number');
+      const codeInput = document.getElementById('room_code');
+
+      function setCodeIfReady() {
+        const house = houseSelect.value;
+        const floor = floorSelect.value;
+        const floorText = floorSelect.options[floorSelect.selectedIndex]?.text || '';
+        const number = numberInput.value;
+        if (house && floor && number) {
+          codeInput.value = `C${house}-P${floorText}-C${number}`;
+        }
+      }
+
+      houseSelect.addEventListener('change', function() {
+        const houseId = this.value;
+        floorSelect.innerHTML = '<option value="">Cargando...</option>';
+        if (!houseId) {
+          floorSelect.innerHTML = '<option value="">Seleccione una casa primero</option>';
+          setCodeIfReady();
+          return;
+        }
+        fetch(`/rooms/floors/${houseId}`)
+          .then(res => res.json())
+          .then(data => {
+            if (data.length === 0) {
+              floorSelect.innerHTML = '<option value="">No hay pisos</option>';
+            } else {
+              floorSelect.innerHTML = data.map(f => `<option value="${f.id}">${f.number}</option>`).join('');
+            }
+            setCodeIfReady();
+          })
+          .catch(() => {
+            floorSelect.innerHTML = '<option value="">Error cargando pisos</option>';
+            setCodeIfReady();
+          });
+      });
+      floorSelect.addEventListener('change', setCodeIfReady);
+      numberInput.addEventListener('input', setCodeIfReady);
+    });
+  </script>
 </div>
 <%- include('../_layout_bottom') %>
