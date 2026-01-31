@@ -1,7 +1,11 @@
+<%- include('../_layout_top') %>
 <div class="card">
   <div class="flex items-center justify-between mb-4">
     <h2 class="text-lg font-medium">Tipos de cuarto</h2>
-    <a href="/room_types/new" class="bg-blue-600 text-white px-3 py-1 rounded">Nuevo tipo</a>
+    <a href="/room_types/new" class="bg-blue-600 text-white px-3 py-1 rounded flex items-center gap-2 btn-small">
+      <svg class="w-4 h-4" aria-hidden="true"><use href="#icon-plus" /></svg>
+      Nuevo tipo
+    </a>
   </div>
   <div class="overflow-x-auto">
     <table class="min-w-full divide-y divide-gray-200">
@@ -22,11 +26,11 @@
             <td class="px-3 py-2"><%= t.code %></td>
             <td class="px-3 py-2"><%= t.name %></td>
             <td class="px-3 py-2"><%= t.base_price %></td>
-            <td class="px-3 py-2"><a class="text-blue-600" href="/room_types/<%= t.id %>">Ver</a></td>
+            <td class="px-3 py-2"><a class="text-blue-600 flex items-center gap-1 btn-small" href="/room_types/<%= t.id %>"><svg class="w-4 h-4" aria-hidden="true"><use href="#icon-key" /></svg>Ver</a></td>
             <td class="px-3 py-2 flex gap-2">
-              <a href="/room_types/<%= t.id %>/edit" class="text-blue-600 hover:underline">Editar</a>
+              <a href="/room_types/<%= t.id %>/edit" class="text-blue-600 hover:underline flex items-center gap-1 btn-small"><svg class="w-4 h-4" aria-hidden="true"><use href="#icon-edit" /></svg>Editar</a>
               <form action="/room_types/<%= t.id %>?_method=DELETE" method="post" style="display:inline;">
-                <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('¿Seguro que deseas eliminar este tipo?')">Eliminar</button>
+                <button type="submit" class="text-red-600 hover:underline flex items-center gap-1 btn-small" onclick="return confirm('¿Seguro que deseas eliminar este tipo?')"><svg class="w-4 h-4" aria-hidden="true"><use href="#icon-trash" /></svg>Eliminar</button>
               </form>
             </td>
           </tr>

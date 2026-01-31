@@ -2,7 +2,10 @@
 <div class="card">
   <div class="flex items-center justify-between mb-4">
     <h2 class="text-lg font-medium">Usuarios</h2>
-    <a href="/users/new" class="bg-blue-600 text-white px-3 py-1 rounded">Crear usuario</a>
+    <a href="/users/new" class="bg-blue-600 text-white px-3 py-1 rounded flex items-center gap-2 btn-small">
+      <svg class="w-4 h-4" aria-hidden="true"><use href="#icon-user" /></svg>
+      Crear usuario
+    </a>
   </div>
   <div class="overflow-x-auto">
     <table class="min-w-full divide-y divide-gray-200">
@@ -24,12 +27,18 @@
             <td class="px-3 py-2"><%= u.email %></td>
             <td class="px-3 py-2"><%= u.full_name %></td>
             <td class="px-3 py-2"><%= u.role %></td>
-            <td class="px-3 py-2"><%= u.status %></td>
-            <td class="px-3 py-2"><a class="text-blue-600" href="/users/<%= u.id %>">Ver</a></td>
+            <td class="px-3 py-2">
+              <%= u.status === 'activo' ? 'Activo'
+                : u.status === 'inactivo' ? 'Inactivo'
+                : u.status === 'active' ? 'Activo'
+                : u.status === 'inactive' ? 'Inactivo'
+                : u.status %>
+            </td>
+            <td class="px-3 py-2"><a class="text-blue-600 flex items-center gap-1 btn-small" href="/users/<%= u.id %>"><svg class="w-4 h-4" aria-hidden="true"><use href="#icon-user" /></svg>Ver</a></td>
             <td class="px-3 py-2 flex gap-2">
-              <a href="/users/<%= u.id %>/edit" class="text-blue-600 hover:underline">Editar</a>
+              <a href="/users/<%= u.id %>/edit" class="text-blue-600 hover:underline flex items-center gap-1 btn-small"><svg class="w-4 h-4" aria-hidden="true"><use href="#icon-edit" /></svg>Editar</a>
               <form action="/users/<%= u.id %>?_method=DELETE" method="post" style="display:inline;">
-                <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('¿Seguro que deseas eliminar este usuario?')">Eliminar</button>
+                <button type="submit" class="text-red-600 hover:underline flex items-center gap-1 btn-small" onclick="return confirm('¿Seguro que deseas eliminar este usuario?')"><svg class="w-4 h-4" aria-hidden="true"><use href="#icon-trash" /></svg>Eliminar</button>
               </form>
             </td>
           </tr>

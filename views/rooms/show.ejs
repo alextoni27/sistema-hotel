@@ -7,10 +7,17 @@
     <div class="bg-gray-50 p-3 rounded"><dt class="text-xs text-gray-500">Número</dt><dd class="mt-1"><%= room.number %></dd></div>
     <div class="bg-gray-50 p-3 rounded"><dt class="text-xs text-gray-500">Tipo</dt><dd class="mt-1"><%= room.type %></dd></div>
     <div class="bg-gray-50 p-3 rounded"><dt class="text-xs text-gray-500">Área</dt><dd class="mt-1"><%= room.area_m2 %> m2</dd></div>
-    <div class="bg-gray-50 p-3 rounded"><dt class="text-xs text-gray-500">Estado</dt><dd class="mt-1"><%= room.status %></dd></div>
+    <div class="bg-gray-50 p-3 rounded"><dt class="text-xs text-gray-500">Estado</dt><dd class="mt-1">
+      <%= room.status === 'available' ? 'Disponible'
+        : room.status === 'occupied' ? 'Ocupado'
+        : room.status === 'maintenance' ? 'Mantenimiento'
+        : room.status === 'inactive' ? 'Inactivo'
+        : room.status === 'active' ? 'Activo'
+        : room.status %>
+    </dd></div>
   </dl>
   <div class="mt-4">
-    <a href="/leases/new" class="bg-blue-600 text-white px-3 py-1 rounded">Crear contrato</a>
+    <a href="/leases/new?room_id=<%= room.id %>" class="bg-blue-600 text-white px-3 py-1 rounded">Crear contrato</a>
   </div>
 </div>
   </div>

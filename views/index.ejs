@@ -1,30 +1,43 @@
-<% layout = undefined %>
+<%- include('partials/icons') %>
 <section class="card">
   <h2 class="text-lg font-medium mb-3">Últimos cuartos</h2>
   <div class="overflow-x-auto">
-    <table class="min-w-full divide-y divide-gray-200">
-      <thead class="bg-gray-50">
-        <tr>
-          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Casa</th>
-          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Piso</th>
-          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Cuarto</th>
-          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Tipo</th>
-          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Estado</th>
-          <th class="px-3 py-2 text-left text-xs font-medium text-gray-500">Ver</th>
-        </tr>
-      </thead>
-      <tbody class="bg-white divide-y divide-gray-100">
-        <% rooms.forEach(r => { %>
-          <tr>
-            <td class="px-3 py-2"><%= r.house %></td>
-            <td class="px-3 py-2"><%= r.floor %></td>
-            <td class="px-3 py-2"><%= r.room_number %></td>
-            <td class="px-3 py-2"><%= r.type %></td>
-            <td class="px-3 py-2"><span class="text-sm text-gray-600"><%= r.status %></span></td>
-            <td class="px-3 py-2"><a class="text-blue-600" href="/rooms/<%= r.id %>">Ver</a></td>
-          </tr>
-        <% }) %>
-      </tbody>
-    </table>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+      <% rooms.forEach(r => { %>
+        <div class="bg-white rounded-xl shadow p-5 border border-gray-100 hover:shadow-lg transition-shadow flex flex-col justify-between h-full group cursor-pointer relative" onclick="window.location='/rooms/<%= r.id %>'" tabindex="0" title="Ver detalle">
+          <div class="flex items-center gap-3 mb-3">
+            <svg class="w-8 h-8 <%= r.status === 'available' ? 'text-blue-500' : 'text-gray-400' %> group-hover:scale-110 transition-transform" aria-hidden="true"><use href="#icon-key" /></svg>
+            <span class="font-bold <%= r.status === 'available' ? 'text-blue-700' : 'text-gray-500' %> text-base"><%= r.type %></span>
+            <span class="ml-auto inline-block px-2 py-1 rounded text-xs font-semibold"
+              style="background-color: <%= r.status === 'available' ? '#d1fae5' : r.status === 'occupied' ? '#fee2e2' : r.status === 'maintenance' ? '#fef9c3' : '#e5e7eb' %>; color: <%= r.status === 'available' ? '#065f46' : r.status === 'occupied' ? '#991b1b' : r.status === 'maintenance' ? '#92400e' : '#374151' %>;">
+              <%= r.status === 'available' ? 'Disponible'
+                : r.status === 'occupied' ? 'Ocupado'
+                : r.status === 'maintenance' ? 'Mantenimiento'
+                : r.status === 'inactive' ? 'Inactivo'
+                : r.status === 'active' ? 'Activo'
+                : r.status %>
+            </span>
+          </div>
+          <div class="grid grid-cols-2 gap-x-3 gap-y-1 text-sm mb-2">
+            <div class="text-gray-500">Casa</div>
+            <div class="font-medium text-gray-800"><%= r.house %></div>
+            <div class="text-gray-500">Piso</div>
+            <div class="font-medium text-gray-800"><%= r.floor %></div>
+            <div class="text-gray-500">Número</div>
+            <div class="font-medium text-gray-800"><%= r.room_number %></div>
+          </div>
+          <div class="flex gap-2 mt-2">
+            <% if (r.status === 'available') { %>
+              <a class="text-green-600 flex items-center gap-1 btn-small hover:underline z-10" href="/leases/new?room_id=<%= r.id %>" onclick="event.stopPropagation()">
+                <svg class="w-4 h-4" aria-hidden="true"><use href="#icon-key" /></svg>Crear contrato
+              </a>
+            <% } %>
+            <a class="text-blue-600 flex items-center gap-1 btn-small hover:underline z-10" href="/rooms/<%= r.id %>" onclick="event.stopPropagation()">
+              <svg class="w-4 h-4" aria-hidden="true"><use href="#icon-key" /></svg>Ver
+            </a>
+          </div>
+        </div>
+      <% }) %>
+    </div>
   </div>
 </section>

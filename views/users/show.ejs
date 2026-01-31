@@ -6,7 +6,13 @@
     <div><dt class="text-xs text-gray-500">Email</dt><dd class="mt-1"><%= user.email %></dd></div>
     <div><dt class="text-xs text-gray-500">Nombre</dt><dd class="mt-1"><%= user.full_name %></dd></div>
     <div><dt class="text-xs text-gray-500">Rol</dt><dd class="mt-1"><%= user.role %></dd></div>
-    <div><dt class="text-xs text-gray-500">Estado</dt><dd class="mt-1"><%= user.status %></dd></div>
+    <div><dt class="text-xs text-gray-500">Estado</dt><dd class="mt-1">
+      <%= user.status === 'activo' ? 'Activo'
+        : user.status === 'inactivo' ? 'Inactivo'
+        : user.status === 'active' ? 'Activo'
+        : user.status === 'inactive' ? 'Inactivo'
+        : user.status %>
+    </dd></div>
     <div><dt class="text-xs text-gray-500">Último login</dt><dd class="mt-1"><%= user.last_login || '-' %></dd></div>
   </dl>
 </div>

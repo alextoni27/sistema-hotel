@@ -1,7 +1,11 @@
+<%- include('../_layout_top') %>
 <div class="card mb-8">
   <div class="flex items-center justify-between mb-4">
     <h2 class="text-lg font-medium">Resumen de pagos por periodo</h2>
-    <a href="/payments/new" class="bg-blue-600 text-white px-3 py-1 rounded">Registrar pago</a>
+    <a href="/payments/new" class="bg-blue-600 text-white px-3 py-1 rounded flex items-center gap-2 btn-small">
+      <svg class="w-4 h-4" aria-hidden="true"><use href="#icon-cash" /></svg>
+      Registrar pago
+    </a>
   </div>
   <div class="overflow-x-auto">
     <table class="min-w-full divide-y divide-gray-200">
@@ -59,7 +63,12 @@
             <td class="px-3 py-2"><%= p.period_start ? new Date(p.period_start).toLocaleDateString('es-PE', { year: 'numeric', month: 'short', day: '2-digit' }) : '-' %> – <%= p.period_end ? new Date(p.period_end).toLocaleDateString('es-PE', { year: 'numeric', month: 'short', day: '2-digit' }) : '-' %></td>
             <td class="px-3 py-2">S/ <%= p.amount %></td>
             <td class="px-3 py-2"><%= p.method %></td>
-            <td class="px-3 py-2"><span class="text-sm text-gray-600"><%= p.status %></span></td>
+            <td class="px-3 py-2"><span class="text-sm text-gray-600">
+              <%= p.status === 'pending' ? 'Pendiente'
+                : p.status === 'paid' ? 'Pagado'
+                : p.status === 'overdue' ? 'Vencido'
+                : p.status %>
+            </span></td>
             <td class="px-3 py-2">
               <% if (p.status !== 'paid') { %>
                 <form method="post" action="/payments/<%= p.id %>/pay" style="display:inline">
@@ -68,9 +77,9 @@
               <% } %>
             </td>
             <td class="px-3 py-2 flex gap-2">
-              <a href="/payments/<%= p.id %>/edit" class="text-blue-600 hover:underline">Editar</a>
+              <a href="/payments/<%= p.id %>/edit" class="text-blue-600 hover:underline flex items-center gap-1 btn-small"><svg class="w-4 h-4" aria-hidden="true"><use href="#icon-edit" /></svg>Editar</a>
               <form action="/payments/<%= p.id %>?_method=DELETE" method="post" style="display:inline;">
-                <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('¿Seguro que deseas eliminar este pago?')">Eliminar</button>
+                <button type="submit" class="text-red-600 hover:underline flex items-center gap-1 btn-small" onclick="return confirm('¿Seguro que deseas eliminar este pago?')"><svg class="w-4 h-4" aria-hidden="true"><use href="#icon-trash" /></svg>Eliminar</button>
               </form>
             </td>
           </tr>

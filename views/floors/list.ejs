@@ -1,7 +1,11 @@
+<%- include('..//_layout_top') %>
 <div class="card">
   <div class="flex items-center justify-between mb-4">
     <h2 class="text-lg font-medium">Pisos</h2>
-    <a href="/floors/new" class="bg-blue-600 text-white px-3 py-1 rounded">Nuevo piso</a>
+    <a href="/floors/new" class="bg-blue-600 text-white px-3 py-1 rounded flex items-center gap-2 btn-small">
+      <svg class="w-4 h-4" aria-hidden="true"><use href="#icon-plus" /></svg>
+      Nuevo piso
+    </a>
   </div>
   <div class="overflow-x-auto">
     <table class="min-w-full divide-y divide-gray-200">
@@ -22,11 +26,17 @@
             <td class="px-3 py-2"><%= f.house_name %></td>
             <td class="px-3 py-2"><%= f.number %></td>
             <td class="px-3 py-2"><%= f.description %></td>
-            <td class="px-3 py-2"><a class="text-blue-600" href="/floors/<%= f.id %>">Ver</a></td>
+            <td class="px-3 py-2"><a class="text-blue-600 flex items-center gap-1 btn-small" href="/floors/<%= f.id %>"><svg class="w-4 h-4" aria-hidden="true"><use href="#icon-plus" /></svg>Ver</a></td>
             <td class="px-3 py-2 flex gap-2">
-              <a href="/floors/<%= f.id %>/edit" class="text-blue-600 hover:underline">Editar</a>
+              <a href="/floors/<%= f.id %>/edit" class="text-blue-600 hover:underline flex items-center gap-1 btn-small">
+                <svg class="w-4 h-4" aria-hidden="true"><use href="#icon-edit" /></svg>
+                Editar
+              </a>
               <form action="/floors/<%= f.id %>?_method=DELETE" method="post" style="display:inline;">
-                <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('¿Seguro que deseas eliminar este piso?')">Eliminar</button>
+                <button type="submit" class="text-red-600 hover:underline flex items-center gap-1 btn-small" onclick="return confirm('¿Seguro que deseas eliminar este piso?')">
+                  <svg class="w-4 h-4" aria-hidden="true"><use href="#icon-trash" /></svg>
+                  Eliminar
+                </button>
               </form>
             </td>
           </tr>

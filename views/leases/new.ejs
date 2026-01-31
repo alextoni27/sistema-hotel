@@ -12,11 +12,22 @@
     </div>
     <div>
       <label class="block text-sm text-gray-700">Cuarto</label>
-      <select name="room_id" class="w-full border rounded px-3 py-2">
+      <select name="room_id" class="w-full border rounded px-3 py-2" id="room_id_select">
         <% rooms.forEach(r => { %>
-          <option value="<%= r.id %>"><%= r.code %> - <%= r.house %> Piso:<%= r.floor %></option>
+          <option value="<%= r.id %>" <%= selectedRoomId && String(selectedRoomId) === String(r.id) ? 'selected' : '' %>><%= r.type %> - <%= r.house %> Piso:<%= r.floor %> Cuarto:<%= r.number %></option>
         <% }) %>
       </select>
+      <script>
+        // Selecciona automáticamente el cuarto si viene por query param
+        (function() {
+          const params = new URLSearchParams(window.location.search);
+          const roomId = params.get('room_id');
+          if(roomId) {
+            const select = document.getElementById('room_id_select');
+            if(select) select.value = roomId;
+          }
+        })();
+      </script>
     </div>
     <div>
       <label class="block text-sm text-gray-700">Fecha inicio</label>
@@ -35,7 +46,10 @@
       <input class="w-full border rounded px-3 py-2" name="deposit" type="number" step="0.01">
     </div>
     <div>
-      <button class="bg-blue-600 text-white px-4 py-2 rounded" type="submit">Crear contrato</button>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-2 btn-small" type="submit">
+        <svg class="w-4 h-4" aria-hidden="true"><use href="#icon-key" /></svg>
+        Crear contrato
+      </button>
     </div>
   </form>
 </div>

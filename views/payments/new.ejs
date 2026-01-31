@@ -1,3 +1,4 @@
+<%- include('../_layout_top') %>
 <div class="max-w-md mx-auto card">
   <h2 class="text-lg font-medium mb-4">Registrar pago</h2>
   <form id="pagoForm" action="/payments" method="post" class="space-y-3">
@@ -32,7 +33,10 @@
       </select>
     </div>
     <div>
-      <button class="bg-blue-600 text-white px-4 py-2 rounded" type="submit">Registrar</button>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-2 btn-small" type="submit">
+        <svg class="w-4 h-4" aria-hidden="true"><use href="#icon-cash" /></svg>
+        Registrar
+      </button>
     </div>
   </form>
     <script src="/js/sweetalert2.all.min.js"></script>

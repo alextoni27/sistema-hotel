@@ -2,7 +2,10 @@
 <div class="card">
   <div class="flex items-center justify-between mb-4">
     <h2 class="text-lg font-medium">Cuartos</h2>
-    <a href="/rooms/new" class="bg-blue-600 text-white px-3 py-1 rounded">Crear cuarto</a>
+    <a href="/rooms/new" class="bg-blue-600 text-white px-3 py-1 rounded flex items-center gap-2 btn-small">
+      <svg class="w-4 h-4" aria-hidden="true"><use href="#icon-plus" /></svg>
+      Crear cuarto
+    </a>
   </div>
   <div class="overflow-x-auto">
     <table class="min-w-full divide-y divide-gray-200">
@@ -24,12 +27,25 @@
             <td class="px-3 py-2"><%= r.floor %></td>
             <td class="px-3 py-2"><%= r.number %></td>
             <td class="px-3 py-2"><%= r.type %></td>
-            <td class="px-3 py-2"><span class="text-sm text-gray-600"><%= r.status %></span></td>
-            <td class="px-3 py-2"><a class="text-blue-600" href="/rooms/<%= r.id %>">Ver</a></td>
+            <td class="px-3 py-2"><span class="text-sm text-gray-600">
+              <%= r.status === 'available' ? 'Disponible'
+                : r.status === 'occupied' ? 'Ocupado'
+                : r.status === 'maintenance' ? 'Mantenimiento'
+                : r.status === 'inactive' ? 'Inactivo'
+                : r.status === 'active' ? 'Activo'
+                : r.status %>
+            </span></td>
+            <td class="px-3 py-2"><a class="text-blue-600 flex items-center gap-1 btn-small" href="/rooms/<%= r.id %>"><svg class="w-4 h-4" aria-hidden="true"><use href="#icon-key" /></svg>Ver</a></td>
             <td class="px-3 py-2 flex gap-2">
-              <a href="/rooms/<%= r.id %>/edit" class="text-blue-600 hover:underline">Editar</a>
+              <a href="/rooms/<%= r.id %>/edit" class="text-blue-600 hover:underline flex items-center gap-1 btn-small">
+                <svg class="w-4 h-4" aria-hidden="true"><use href="#icon-edit" /></svg>
+                Editar
+              </a>
               <form action="/rooms/<%= r.id %>?_method=DELETE" method="post" style="display:inline;">
-                <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('¿Seguro que deseas eliminar este cuarto?')">Eliminar</button>
+                <button type="submit" class="text-red-600 hover:underline flex items-center gap-1 btn-small" onclick="return confirm('¿Seguro que deseas eliminar este cuarto?')">
+                  <svg class="w-4 h-4" aria-hidden="true"><use href="#icon-trash" /></svg>
+                  Eliminar
+                </button>
               </form>
             </td>
           </tr>

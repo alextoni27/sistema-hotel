@@ -9,8 +9,10 @@ module.exports = {
 
   newForm: async (req, res) => {
     const tenants = await db.query('SELECT * FROM public.tenant');
-    const rooms = await db.query("SELECT r.*, h.name as house, f.number as floor FROM public.room r JOIN public.house h ON r.house_id=h.id JOIN public.floor f ON r.floor_id=f.id WHERE r.status='available'");
-    res.render('leases/new', { tenants: tenants.rows, rooms: rooms.rows });
+    const rooms = await db.query("SELECT r.*, h.name as house, f.number as floor, rt.name as type FROM public.room r JOIN public.house h ON r.house_id=h.id JOIN public.floor f ON r.floor_id=f.id JOIN public.room_type rt ON r.room_type_id=rt.id WHERE r.status='available'");
+    // Permitir seleccionar automáticamente el cuarto si viene por query param
+    const selectedRoomId = req.query.room_id || null;
+    res.render('leases/new', { tenants: tenants.rows, rooms: rooms.rows, selectedRoomId });
   },
 
   create: async (req, res) => {
